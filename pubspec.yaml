@@ -1,0 +1,37 @@
+name: zvhive
+description: ZVHive - Comic & Anime Community App
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  supabase_flutter: ^2.4.0
+  flutter_dotenv: ^5.1.0
+  provider: ^6.0.5
+  google_mobile_ads: ^3.1.0
+  dio: ^5.4.0
+  cached_network_image: ^3.3.0
+  video_player: ^2.8.0
+  webview_flutter: ^4.4.0
+  flutter_markdown: ^0.6.16
+  image_picker: ^1.0.4
+  uuid: ^3.0.7
+  intl: ^0.18.1
+  connectivity_plus: ^5.0.0
+  permission_handler: ^11.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - .env
