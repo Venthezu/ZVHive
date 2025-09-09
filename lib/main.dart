@@ -6,6 +6,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'core/supabase_client.dart';
 import 'core/theme.dart';
 import 'providers/auth_provider.dart';
+import 'providers/comic_provider.dart';
+import 'providers/anime_provider.dart';
+import 'providers/download_provider.dart';
+import 'providers/ads_provider.dart';
+import 'providers/post_provider.dart';
+import 'providers/chat_provider.dart';
 import 'ui/screens/splash_screen.dart';
 
 void main() async {
@@ -23,8 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => AuthProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ComicProvider()),
+        ChangeNotifierProvider(create: (_) => AnimeProvider()),
+        ChangeNotifierProvider(create: (_) => DownloadProvider()),
+        ChangeNotifierProvider(create: (_) => AdsProvider()..initialize()),
+        ChangeNotifierProvider(create: (_) => PostProvider()),
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
+      ],
       child: MaterialApp(
         title: 'ZVHive',
         theme: AppTheme.darkTheme,
