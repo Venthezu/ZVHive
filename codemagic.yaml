@@ -1,26 +1,26 @@
 workflows:
   zvhive-android:
     name: ZVHive Android Build
+    max_build_duration: 60
     environment:
-      groups:
-        - environment_variables
+      flutter: stable
       vars:
         BUNDLE_ID: "com.zuu.zvhive"
         APP_NAME: "ZVHive"
     scripts:
       - name: Install dependencies
+        script: flutter pub get
+      - name: Build Android APK
         script: |
-          flutter pub get
-      - name: Build Android
-        script: |
-          flutter build apk --release --dart-define=SUPABASE_URL=$SUPABASE_URL --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY --dart-define=ADMOB_APP_ID=$ADMOB_APP_ID --dart-define=ADMOB_BANNER_ID=$ADMOB_BANNER_ID --dart-define=ADMOB_INTERSTITIAL_ID=$ADMOB_INTERSTITIAL_ID
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL=$SUPABASE_URL \
+            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
+            --dart-define=ADMOB_APP_ID=$ADMOB_APP_ID \
+            --dart-define=ADMOB_BANNER_ID=$ADMOB_BANNER_ID \
+            --dart-define=ADMOB_INTERSTITIAL_ID=$ADMOB_INTERSTITIAL_ID
     artifacts:
-      - build/app/outputs/flutter-apk/*.apk
+      - build/app/outputs/flutter-apk/app-release.apk
     publishing:
       email:
         recipients:
           - zvhivecorp@gmail.com
-      scripts:
-        - name: Notify Success
-          script: |
-            echo "Build completed successfully! 🎉"
