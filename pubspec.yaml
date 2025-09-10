@@ -39,8 +39,3 @@ flutter:
   assets:
     - assets/
     - .env
-    
-module:
-  androidX: true
-  androidPackage: com.zuu.zvhive
-   iosBundleIdentifier: com.zuu.zvhive
