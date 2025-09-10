@@ -1,26 +1,39 @@
 workflows:
   zvhive-android:
     name: ZVHive Android Build
-    max_build_duration: 60
     environment:
-      flutter: stable
+      groups:
+        - env_vars
       vars:
-        BUNDLE_ID: "com.zuu.zvhive"
         APP_NAME: "ZVHive"
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
     scripts:
-      - name: Install dependencies
-        script: flutter pub get
+      - name: Set up Flutter
+        script: |
+          flutter --version
+          flutter channel stable
+          flutter upgrade
+      - name: Get dependencies
+        script: |
+          flutter pub get
+      - name: Run tests
+        script: |
+          flutter test
       - name: Build Android APK
         script: |
-          flutter build apk --release \
-            --dart-define=SUPABASE_URL=$SUPABASE_URL \
-            --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY \
-            --dart-define=ADMOB_APP_ID=$ADMOB_APP_ID \
-            --dart-define=ADMOB_BANNER_ID=$ADMOB_BANNER_ID \
-            --dart-define=ADMOB_INTERSTITIAL_ID=$ADMOB_INTERSTITIAL_ID
+          flutter build apk --release --dart-define=SUPABASE_URL=$SUPABASE_URL --dart-define=SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY --dart-define=ADMOB_APP_ID=$ADMOB_APP_ID --dart-define=ADMOB_BANNER_ID=$ADMOB_BANNER_ID --dart-define=ADMOB_INTERSTITIAL_ID=$ADMOB_INTERSTITIAL_ID
     artifacts:
-      - build/app/outputs/flutter-apk/app-release.apk
+      - build/**/outputs/**/*.apk
     publishing:
       email:
         recipients:
           - zvhivecorp@gmail.com
+        notify:
+          success: true
+          failure: true
